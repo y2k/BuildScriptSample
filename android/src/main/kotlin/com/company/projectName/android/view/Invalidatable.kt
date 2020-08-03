@@ -9,7 +9,10 @@ import androidx.ui.layout.fillMaxWidth
 import androidx.ui.material.Button
 
 @Composable
-fun Invalidatable(context: () -> Unit, oldState: @Composable() () -> Unit) {
+fun Invalidatable(
+    oldState: @Composable() () -> Unit,
+    onClick: () -> Unit
+) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -20,7 +23,7 @@ fun Invalidatable(context: () -> Unit, oldState: @Composable() () -> Unit) {
                 Text(text = "Invalidate")
             },
             onClick = {
-                context()
+                onClick()
             }
         )
         oldState()

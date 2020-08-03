@@ -37,8 +37,7 @@ class ViewModel : () -> Unit {
             delay(4000)//todo: for test
 
             val dataArg = "data data data data"
-            currentState = { Invalidatable({ this@ViewModel() }, { Data(dataArg) }) }
-
+            currentState = { Invalidatable({ Data(dataArg) }, { this@ViewModel() }) }
         }
     }
 
