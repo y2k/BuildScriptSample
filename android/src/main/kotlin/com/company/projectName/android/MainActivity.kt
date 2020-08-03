@@ -13,7 +13,6 @@ import androidx.ui.material.Scaffold
 import androidx.ui.material.TopAppBar
 import androidx.ui.tooling.preview.Preview
 import androidx.ui.unit.dp
-import com.company.projectName.android.view.IContext
 import com.company.projectName.android.view.Initial
 
 class MainActivity : AppCompatActivity() {
@@ -36,7 +35,7 @@ fun App(model: ViewModel) {
         Scaffold(topAppBar = { MyAppBar() }) {
             // observe the viewmodel here. compose will recompose when it changes.
             val viewState = observe(model.viewState)
-            viewState?.draw()
+            viewState?.invoke()
         }
     }
 }
@@ -55,18 +54,14 @@ fun MyAppBar() {
     )
 }
 
-val stubContext = object: IContext{
-    override fun onInvalidateClick() {
-        //do nothing
-    }
-}
+val stubContext = {}
 
 @Preview
 @Composable
 fun preview() {
     MaterialTheme {
         Scaffold(topAppBar = { MyAppBar() }) {
-            Initial(stubContext).draw()
+            Initial()
         }
     }
 }
