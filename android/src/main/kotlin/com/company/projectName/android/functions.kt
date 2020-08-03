@@ -1,6 +1,7 @@
 package com.company.projectName.android
 
 import androidx.compose.Composable
+import androidx.compose.onActive
 import androidx.compose.state
 import androidx.ui.foundation.Text
 import androidx.ui.graphics.Color
@@ -45,17 +46,18 @@ fun MyAppBar() {
 fun Root() {
     val currentState = state<State> { InitialState }
 
-    fun onClick() {
-        CoroutineScope(Dispatchers.IO).launch {
-            val oldState = currentState.value
-            currentState.value = ProgressState(oldState)
+    fun invalidateData() {
+        CoroutineScope(Dispatchers.Main).launch {
+            currentState.value = ProgressState(currentState.value)
 
             delay(4000) // todo: for test
 
             val dataArg = "data data data data"
-            currentState.value = InvalidatableState(DataState(dataArg), ::onClick)
+            currentState.value = InvalidatableState(DataState(dataArg), ::invalidateData)
         }
     }
+
+    onActive { invalidateData() }
 
     RenderState(currentState.value)
 }
